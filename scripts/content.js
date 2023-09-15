@@ -2,9 +2,9 @@ const hostUrl = location.host;
 
 if (hostUrl === "www.youtube.com") {
   let video = document.querySelector('.html5-main-video');
-  let parent = document.querySelector(".ytd-watch-metadata");
-  let button = document.createElement('button');
   let adSkipInterval;
+  let item;
+  let retryCount = 0;
 
   function skipAd() {
     try {
@@ -12,8 +12,7 @@ if (hostUrl === "www.youtube.com") {
       if (skipButton) {
         video.currentTime = 999;
         skipButton.click();
-      } else {
-        console.log("No skip button found");
+        console.log('skip');
       }
     } catch (e) {
       console.error('Error while skipping ad:', e);
@@ -30,19 +29,31 @@ if (hostUrl === "www.youtube.com") {
     } else {
       video.requestPictureInPicture();
     }
-  };
-
-  button.innerHTML = 'picture in picture';
-  button.style.cssText = `
-    background-color: rgb(42,42,42);
-    color: white;
-    border-radius: 100vh;
-    border: 0px;
-    padding: 5px;
-    margin: 5px;
-  `;
-  button.addEventListener('click', togglePictureInPicture);
-  parent.appendChild(button);
-} else {
-  console.log("Not on YouTube. Skipping ad script.");
+  }
+  function getItemAndAddButton() {
+    item = document.querySelector(".item .style-scope .ytd-watch-metadata");
+    if (item) {
+      let button = document.createElement('button');
+      button.innerHTML = 'picture in picture';
+      button.style.cssText = `
+        background-color: rgb(42, 42, 42);
+        color: white;
+        border-radius: 100vh;
+        border: 0px;
+        padding: 10px;
+        margin: 0 10px;
+      `;
+      button.addEventListener('click', togglePictureInPicture);
+      item.appendChild(button);
+    } else {
+      if (retryCount < 10) {
+        retryCount++;
+        console.log(`Retry ${retryCount}...`);
+        setTimeout(getItemAndAddButton, 1000);
+      } else {
+        console.log('Reached maximum retry count. Giving up.');
+      }
+    }
+  }
+  getItemAndAddButton();
 }
