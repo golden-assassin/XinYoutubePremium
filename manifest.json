@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "AdBlock",
   "description": "Automatically removes Youtube ad elements",
-  "version": "1.0",
+  "version": "1.0.4",
   "content_scripts": [
     {
       "js": [
