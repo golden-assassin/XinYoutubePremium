@@ -1,6 +1,4 @@
-const hostUrl = location.host;
-
-if (hostUrl === "www.youtube.com") {
+if (location.host === "www.youtube.com") {
   let video;
   let adSkipInterval;
   let retryCount = 0;
@@ -20,7 +18,6 @@ if (hostUrl === "www.youtube.com") {
       console.error(`Error while handling ad: ${e.message}`);
     }
   }
-
   function togglePictureInPicture() {
     if (document.pictureInPictureElement) {
       document.exitPictureInPicture();
@@ -28,7 +25,6 @@ if (hostUrl === "www.youtube.com") {
       video.requestPictureInPicture();
     }
   }
-
   function addPictureInPictureButton() {
     const item = document.querySelector(".item .style-scope .ytd-watch-metadata");
     if (item) {
