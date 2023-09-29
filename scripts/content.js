@@ -1,10 +1,10 @@
 if (location.host === "www.youtube.com") {
   let video;
-  let adSkipInterval;
-  let retryCount = 0;
-  const maxRetryCount = 10;
+  let SkipInterval;
+  let retry = 0;
+  const maxRetry = 10;
 
-  function handleAd() {
+  function handle() {
     try {
       const skipButton = document.querySelector(".ytp-ad-skip-button-container, .ytp-ad-overlay-close-container");
       const adText = document.querySelector(".ytp-ad-text, .ytp-ad-preview-text");
@@ -25,18 +25,18 @@ if (location.host === "www.youtube.com") {
       video.requestPictureInPicture();
     }
   }
-  function addPictureInPictureButton() {
-    const item = document.querySelector(".item .style-scope .ytd-watch-metadata");
-    if (item) {
+  function PictureInPictureButton() {
+    const controls = document.querySelector(".ytp-right-controls");
+    if (controls) {
       const button = document.createElement('button');
       button.innerHTML = 'Picture';
-      button.style.cssText = `background-color:rgb(42,42,42);color:white;border-radius:100vh;border:0px;padding:10px;margin:0 10px;`;
+      button.style.cssText = `height:55%;opacity:0.9;display:inline-block;width:48px;padding:0px 2px;overflow:hidden;position:relative;top:-20px;background:transparent;border:1px solid #fff;color:#fff;border-radius:100vh;`;
       button.addEventListener('click', togglePictureInPicture);
-      item.appendChild(button);
-    } else if (retryCount < maxRetryCount) {
-      retryCount++;
-      console.log(`Retry ${retryCount}...`);
-      setTimeout(addPictureInPictureButton, 1000);
+      controls.appendChild(button);
+    } else if (retry < maxRetry) {
+      retry++;
+      console.log(`Retry ${retry}...`);
+      setTimeout(PictureInPictureButton, 1000);
     } else {
       console.log('Reached maximum retry count. Giving up.');
     }
@@ -44,8 +44,8 @@ if (location.host === "www.youtube.com") {
   function waitForPageLoad() {
     if (document.readyState === "complete") {
       video = document.querySelector('.html5-main-video');
-      adSkipInterval = setInterval(handleAd, 1000);
-      addPictureInPictureButton();
+      SkipInterval = setInterval(handle, 1000);
+      PictureInPictureButton();
       console.log("complete");
     } else {
       setTimeout(waitForPageLoad, 1000);
