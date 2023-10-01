@@ -1,6 +1,5 @@
-if (location.host === "www.youtube.com") {
+if (location.host === "www.youtube.com" && location.pathname === "/watch") {
   let video;
-  let SkipInterval;
   let retry = 0;
   const maxRetry = 10;
 
@@ -35,18 +34,14 @@ if (location.host === "www.youtube.com") {
       controls.appendChild(button);
     } else if (retry < maxRetry) {
       retry++;
-      console.log(`Retry ${retry}...`);
       setTimeout(PictureInPictureButton, 1000);
-    } else {
-      console.log('Reached maximum retry count. Giving up.');
     }
   }
   function waitForPageLoad() {
     if (document.readyState === "complete") {
       video = document.querySelector('.html5-main-video');
-      SkipInterval = setInterval(handle, 1000);
+      setInterval(handle, 1000);
       PictureInPictureButton();
-      console.log("complete");
     } else {
       setTimeout(waitForPageLoad, 1000);
     }
