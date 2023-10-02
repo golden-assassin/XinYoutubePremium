@@ -1,4 +1,4 @@
-if (location.host === "www.youtube.com" && location.pathname === "/watch") {
+if (location.host === "www.youtube.com") {
   let video;
   let retry = 0;
   const maxRetry = 10;
