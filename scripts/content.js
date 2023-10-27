@@ -1,5 +1,6 @@
 if (location.host === "www.youtube.com") {
   let video;
+  let permit = true;
   let retry = 0;
   const MAX_RETRY = 5;
 
@@ -13,6 +14,17 @@ if (location.host === "www.youtube.com") {
       }
     }
   }
+  function input(event) {
+    if (event.key === 'A' && permit) {
+      togglePictureInPicture();
+    } else if (event.key === 'R') {
+      permit = !permit;
+    }
+  }
+  window.addEventListener('keydown', input);
+  window.addEventListener('beforeunload', () => {
+    window.removeEventListener('keydown', input);
+  });
 
   function togglePictureInPicture() {
     if (document.pictureInPictureElement) {
@@ -44,10 +56,10 @@ if (location.host === "www.youtube.com") {
         addPictureInPictureButton();
       } else if (retry < MAX_RETRY) {
         retry++;
-        setTimeout(waitForVideoPageLoad, 1000);
+        setTimeout(waitForVideoPageLoad, 500);
       }
     } else {
-      setTimeout(waitForVideoPageLoad, 1000);
+      setTimeout(waitForVideoPageLoad, 1500);
     }
   }
   waitForVideoPageLoad();
