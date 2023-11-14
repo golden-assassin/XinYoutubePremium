@@ -7,8 +7,9 @@ if (location.host === "www.youtube.com") {
   function handle() {
     const skipButton = document.querySelector(".ytp-ad-skip-button, .ytp-ad-overlay-close-button");
     const adText = document.querySelector(".ytp-ad-text, .ytp-ad-preview-text");
+    const duration = video.duration || 999;
     if (skipButton || adText) {
-      video.currentTime = video.duration;
+      video.currentTime = duration;
       if (skipButton) {
         skipButton.click();
       }
