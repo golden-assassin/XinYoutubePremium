@@ -3,24 +3,20 @@ if (location.host === "www.youtube.com") {
   let permit = true;
   let retry = 0;
   const MAX_RETRY = 5;
-
   function handle() {
     const skipButton = document.querySelector(".ytp-ad-skip-button, .ytp-ad-overlay-close-button");
     const adText = document.querySelector(".ytp-ad-text, .ytp-ad-preview-text");
     const duration = video.duration || 999;
     if (skipButton || adText) {
       video.currentTime = duration;
-      if (skipButton) {
-        skipButton.click();
-      }
+      skipButton && skipButton.click();
+      const newSkipButton = document.getElementById("ad-text:r");
+      newSkipButton && newSkipButton.click();
     }
   }
+
   function input(event) {
-    if (event.key === 'A' && permit) {
-      togglePictureInPicture();
-    } else if (event.key === 'R') {
-      permit = !permit;
-    }
+    event.key === 'A' && permit ? togglePictureInPicture() : (event.key === 'R' && (permit = !permit));
   }
   window.addEventListener('keydown', input);
   window.addEventListener('beforeunload', () => {
@@ -28,11 +24,7 @@ if (location.host === "www.youtube.com") {
   });
 
   function togglePictureInPicture() {
-    if (document.pictureInPictureElement) {
-      document.exitPictureInPicture();
-    } else {
-      video.requestPictureInPicture();
-    }
+    document.pictureInPictureElement ? document.exitPictureInPicture() : video.requestPictureInPicture();
   }
 
   function addPictureInPictureButton() {
