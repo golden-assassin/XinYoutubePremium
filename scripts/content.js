@@ -3,57 +3,49 @@ if (location.host === "www.youtube.com") {
   let permit = true;
   let retry = 0;
   const MAX_RETRY = 5;
+  const ytp = '.ytp-ad-simple-ad-badge, .ytp-ad-text,.ytp-ad-button,.ytp-ad-visit-advertiser-button,.ytp-ad-button-link,.ytp-ad-skip-button,.ytp-ad-overlay-close-button, .ytp-ad-preview-text-modern, .ytp-ad-preview-container .ytp-ad-preview-container-detached';
   function handle() {
-    const skipButton = document.querySelector(".ytp-ad-skip-button, .ytp-ad-overlay-close-button");
-    const adText = document.querySelector(".ytp-ad-text, .ytp-ad-preview-text");
-    const duration = video.duration || 999;
-    if (skipButton || adText) {
+    const content = document.querySelectorAll(ytp);
+    const firstContent = content[0] || false;
+    if (firstContent) {
+      const selector = document.querySelectorAll("[id^='skip-button']");
+      const duration = video.duration || 999;
       video.currentTime = duration;
-      skipButton && skipButton.click();
-      const newSkipButton = document.getElementById("ad-text:r");
-      newSkipButton && newSkipButton.click();
+      if (selector) {
+        for (const select of selector) {
+          const button = select.querySelector("button");
+          button && button.click();
+        }
+      }
     }
   }
-
-  function input(event) {
-    event.key === 'A' && permit ? togglePictureInPicture() : (event.key === 'R' && (permit = !permit));
-  }
-  window.addEventListener('keydown', input);
-  window.addEventListener('beforeunload', () => {
-    window.removeEventListener('keydown', input);
-  });
-
-  function togglePictureInPicture() {
+  function input(event) { event.key === 'A' && permit ? togglePiP() : (event.key === 'R' && (permit = !permit)); }
+  function togglePiP() {
+    const video = document.querySelector('video.html5-main-video');
     document.pictureInPictureElement ? document.exitPictureInPicture() : video.requestPictureInPicture();
   }
-
-  function addPictureInPictureButton() {
+  function addPiPButton() {
     const controls = document.querySelector(".ytp-right-controls");
     if (controls) {
       const button = document.createElement('button');
       button.innerHTML = 'PiP';
-      button.style.cssText = `height:55%;opacity:0.9;display:inline-block;width:48px;padding:0px 2px;overflow:hidden;position:relative;top:-20px;background:transparent;border:1px solid #fff;color:#fff;border-radius:100vh;`;
-      button.addEventListener('click', togglePictureInPicture);
+      button.style.cssText = "height:55%;opacity:0.9;display:inline-block;width:48px;padding:0px 2px;overflow:hidden;position:relative;top:-20px;background:transparent;border:1px solid #fff;color:#fff;border-radius:100vh;";
+      button.addEventListener('click', togglePiP);
       controls.appendChild(button);
     } else if (retry < MAX_RETRY) {
       retry++;
-      setTimeout(addPictureInPictureButton, 1000);
+      setTimeout(addPiPButton, 1000);
     }
+  }
+  function waitVideoLoad() {
+    (location.pathname === "/watch" && document.readyState === "complete") ?
+      (video = document.querySelector('video.html5-main-video')) ?
+        (setInterval(handle, 1000), addPiPButton()) :
+        ((retry < MAX_RETRY) ? (retry++, setTimeout(waitVideoLoad, 500)) : null) :
+      setTimeout(waitVideoLoad, 1500);
   }
 
-  function waitForVideoPageLoad() {
-    if (location.pathname === "/watch" && document.readyState === "complete") {
-      video = document.querySelector('video.html5-main-video');
-      if (video) {
-        setInterval(handle, 1000);
-        addPictureInPictureButton();
-      } else if (retry < MAX_RETRY) {
-        retry++;
-        setTimeout(waitForVideoPageLoad, 500);
-      }
-    } else {
-      setTimeout(waitForVideoPageLoad, 1500);
-    }
-  }
-  waitForVideoPageLoad();
+  waitVideoLoad();
+  window.addEventListener('keydown', input);
+  window.addEventListener('beforeunload', () => {window.removeEventListener('keydown', input);});
 }
