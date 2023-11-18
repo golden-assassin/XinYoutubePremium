@@ -5,8 +5,8 @@ if (location.host === "www.youtube.com") {
   const MAX_RETRY = 5;
   function handle() {
     const content = document.querySelectorAll("[class^='ytp-ad-text']");
-    const firstContent = content[0] || false;
-    if (firstContent) {
+    const first = content[0] || false;
+    if (first) {
       const selector = document.querySelectorAll("[id^='skip-button']");
       const duration = video.duration || 999;
       video.currentTime = duration;
