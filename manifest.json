@@ -6,7 +6,8 @@
   "content_scripts": [
     {
       "js": [
-        "scripts/contents.js"
+        "scripts/contents.js",
+        "scripts/blocker.js"
       ],
       "matches": [
         "https://www.youtube.com/*"
