@@ -6,7 +6,10 @@ if (location.host === "www.youtube.com") {
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom")
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
-
+    window.addEventListener("resize", function() {
+      originalWidth = player.clientWidth;
+      originalHeight = player.clientHeight;
+    });
     window.addEventListener("scroll", function() {
       const scrollPosition = window.scrollY || window.pageYOffset;
       const topsOffset = tops.clientHeight;
@@ -28,16 +31,14 @@ if (location.host === "www.youtube.com") {
         video.style.top = "0";
         video.style.left = "0";
         video.style.zIndex = "0";
-        video.style.height = `${originalHeight}px`;
-        video.style.width = `${originalWidth}px`;
+        video.style.height = "auto";
+        video.style.width = "100%";
         bar.style.position = "absolute";
         bar.style.scale = "1"
         bar.style.left = "12px"
         bar.style.top = "unset"
         bar.style.background = "unset"
         player.style.position = "relative";
-        originalWidth = video.clientWidth;
-        originalHeight = video.clientHeight;
       }
     });
   }
