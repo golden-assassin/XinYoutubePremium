@@ -11,7 +11,7 @@ if (location.host === "www.youtube.com") {
       const topsOffset = tops.clientHeight;
       if (scrollPosition > innerHeight - topsOffset) {
         video.style.position = "fixed";
-        video.style.top = "47px";
+        video.style.top = "56px";
         video.style.left = "1px";
         video.style.zIndex = "1003";
         video.style.height = `${originalHeight * 0.5}px`;
