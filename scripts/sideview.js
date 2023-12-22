@@ -20,7 +20,7 @@ if (location.host === "www.youtube.com") {
         bar.style.position = "fixed";
         bar.style.scale = "0.5"
         bar.style.left = `-${Math.floor(originalWidth * 0.5 / 2) - 15}px`;
-        bar.style.top = `${Math.floor(originalHeight * 0.5) + (56/2)}px`;
+        bar.style.top = `${Math.floor(originalHeight * 0.5) + 18}px`;
         bar.style.background = "rgb(0,0,0,0.2)"
         player.style.position = "unset";
       } else {
