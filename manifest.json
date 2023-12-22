@@ -7,7 +7,8 @@
     {
       "js": [
         "scripts/contents.js",
-        "scripts/blocker.js"
+        "scripts/blocker.js",
+        "scripts/sideview.js"
       ],
       "matches": [
         "https://www.youtube.com/*"
