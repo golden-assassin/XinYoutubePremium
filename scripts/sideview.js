@@ -1,8 +1,8 @@
 if (location.host === "www.youtube.com") {
+  let video;
   function sideview() {
     const tops = document.querySelector("ytd-watch-metadata");
     const player = document.querySelector(".html5-video-player");
-    const video = document.querySelector('video.html5-main-video');
     const originalWidth = video.clientWidth;
     const originalHeight = video.clientHeight;
 
