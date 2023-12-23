@@ -6,6 +6,39 @@ if (location.host === "www.youtube.com") {
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom")
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
+    function view(type=false) {
+      const vs = video.style;
+      const bs = bar.style
+      const ps = player.style
+      if (type) {
+        vs.position = "fixed";
+        vs.top = "56px";
+        vs.left = "1px";
+        vs.zIndex = "1003";
+        vs.height = `${Math.floor(originalHeight * 0.5)}px`;
+        vs.width = `${Math.floor(originalWidth * 0.5)}px`;
+        bs.position = "fixed";
+        bs.scale = "0.5"
+        bs.left = `-${Math.floor(originalWidth * 0.5 / 2) - 15}px`;
+        bs.top = `${Math.floor(originalHeight * 0.5) + 18}px`;
+        bs.background = "rgb(0,0,0,0.5)"
+        ps.position = "unset";
+      } else {
+        vs.position = "absolute";
+        vs.top = "0";
+        vs.left = "0";
+        vs.zIndex = "0";
+        vs.height = "auto";
+        vs.width = "100%";
+        bs.position = "absolute";
+        bs.scale = "1"
+        bs.left = "12px"
+        bs.top = "unset"
+        bs.background = "unset"
+        ps.position = "relative";
+      }
+    }
+
     window.addEventListener("resize", function() {
       originalWidth = player.clientWidth;
       originalHeight = player.clientHeight;
@@ -13,33 +46,7 @@ if (location.host === "www.youtube.com") {
     window.addEventListener("scroll", function() {
       const scrollPosition = window.scrollY || window.pageYOffset;
       const topsOffset = tops.clientHeight;
-      if (scrollPosition > innerHeight - topsOffset) {
-        video.style.position = "fixed";
-        video.style.top = "56px";
-        video.style.left = "1px";
-        video.style.zIndex = "1003";
-        video.style.height = `${Math.floor(originalHeight * 0.5)}px`;
-        video.style.width = `${Math.floor(originalWidth * 0.5)}px`;
-        bar.style.position = "fixed";
-        bar.style.scale = "0.5"
-        bar.style.left = `-${Math.floor(originalWidth * 0.5 / 2) - 15}px`;
-        bar.style.top = `${Math.floor(originalHeight * 0.5) + 18}px`;
-        bar.style.background = "rgb(0,0,0,0.2)"
-        player.style.position = "unset";
-      } else {
-        video.style.position = "absolute";
-        video.style.top = "0";
-        video.style.left = "0";
-        video.style.zIndex = "0";
-        video.style.height = "auto";
-        video.style.width = "100%";
-        bar.style.position = "absolute";
-        bar.style.scale = "1"
-        bar.style.left = "12px"
-        bar.style.top = "unset"
-        bar.style.background = "unset"
-        player.style.position = "relative";
-      }
+      scrollPosition > innerHeight - topsOffset ? view(true) : view(false);
     });
   }
   function waitVideoLoad() {
