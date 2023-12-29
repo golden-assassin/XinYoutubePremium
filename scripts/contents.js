@@ -23,14 +23,28 @@ if (location.host === "www.youtube.com") {
       setTimeout(addPiPButton, 1000);
     }
   }
+
+  function sponsor_ads() {
+    const sponsor_list = [
+      "#fulfilled-layout > ytd-page-top-ad-layout-renderer",
+      "#player-ads > ytd-player-legacy-desktop-watch-ads-renderer"
+    ]
+    for (const sponsor of sponsor_list) {
+      const ads = document.querySelector(sponsor);
+      ads && ads.remove()
+    }
+  }
+
   function waitVideoLoad() {
     (location.pathname === "/watch" && document.readyState === "complete") ?
     (video = document.querySelector('video.html5-main-video')) ? addPiPButton() :
     ((retry < MAX_RETRY) ? (retry++, setTimeout(waitVideoLoad, 500)) : null) : setTimeout(waitVideoLoad, 1000);
   }
-  waitVideoLoad();
   window.addEventListener('keydown', input);
   window.addEventListener('beforeunload', () => {
     window.removeEventListener('keydown', input);
   });
+
+  waitVideoLoad();
+  sponsor_ads()
 }
