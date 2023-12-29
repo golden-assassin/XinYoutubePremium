@@ -1,6 +1,30 @@
 if (location.host === "www.youtube.com") {
   let video;
+  let tab_off = true;
+
+  async function Hidden() {
+    const bottom_row = document.querySelector("#bottom-row");
+    const tab = bottom_row.querySelector("#description");
+    const collapse = document.querySelector("#collapse");
+
+    function tabClickHandler() {
+      tab_off = false;
+      tab.removeEventListener("click", tabClickHandler);
+    }
+    function collapseClickHandler() {
+      tab_off = true;
+      setTimeout(() => {
+        tab.removeEventListener("click", tabClickHandler);
+        tab.addEventListener("click", tabClickHandler);
+      }, 0);
+    }
+    tab.addEventListener("click", tabClickHandler);
+    collapse.addEventListener("click", collapseClickHandler);
+  }
+
+
   function sideview() {
+    Hidden()
     const tops = document.querySelector("ytd-watch-metadata");
     const player = document.querySelector(".html5-video-player");
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom")
@@ -28,8 +52,8 @@ if (location.host === "www.youtube.com") {
         vs.top = "0";
         vs.left = "0";
         vs.zIndex = "0";
-        vs.height = "auto";
-        vs.width = "100%";
+        vs.height = "fit-content";
+        vs.width = "auto";
         bs.position = "absolute";
         bs.scale = "1"
         bs.left = "12px"
@@ -47,6 +71,8 @@ if (location.host === "www.youtube.com") {
       const scrollPosition = window.scrollY || window.pageYOffset;
       const topsOffset = tops.clientHeight;
       scrollPosition > innerHeight - topsOffset ? view(true) : view(false);
+      !tab_off && view(false)
+      console.log(tab_off)
     });
   }
   function waitVideoLoad() {
