@@ -25,13 +25,9 @@ if (location.host === "www.youtube.com") {
   }
 
   function sponsor_ads() {
-    const sponsor_list = [
-      "#fulfilled-layout > ytd-page-top-ad-layout-renderer",
-      "#player-ads > ytd-player-legacy-desktop-watch-ads-renderer"
-    ]
+    const sponsor_list = document.querySelectorAll("ytd-player-legacy-desktop-watch-ads-renderer, #player-ads")
     for (const sponsor of sponsor_list) {
-      const ads = document.querySelector(sponsor);
-      ads && ads.remove()
+      sponsor && sponsor.remove()
     }
   }
 
