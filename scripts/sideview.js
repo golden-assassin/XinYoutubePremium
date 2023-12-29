@@ -43,7 +43,7 @@ if (location.host === "www.youtube.com") {
         vs.width = `${Math.floor(originalWidth * 0.5)}px`;
         bs.position = "fixed";
         bs.scale = "0.5"
-        bs.left = `-${Math.floor(originalWidth * 0.5 / 2) - 15}px`;
+        bs.left = `-${Math.floor(originalWidth * 0.25) - 15}px`;
         bs.top = `${Math.floor(originalHeight * 0.5) + 18}px`;
         bs.background = "rgb(0,0,0,0.5)"
         ps.position = "unset";
