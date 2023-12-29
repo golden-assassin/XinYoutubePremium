@@ -53,7 +53,7 @@ if (location.host === "www.youtube.com") {
         vs.left = "0";
         vs.zIndex = "0";
         vs.height = "fit-content";
-        vs.width = "auto";
+        vs.width = "revert-layer";
         bs.position = "absolute";
         bs.scale = "1"
         bs.left = "12px"
@@ -72,7 +72,6 @@ if (location.host === "www.youtube.com") {
       const topsOffset = tops.clientHeight;
       scrollPosition > innerHeight - topsOffset ? view(true) : view(false);
       !tab_off && view(false)
-      console.log(tab_off)
     });
   }
   function waitVideoLoad() {
