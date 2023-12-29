@@ -30,21 +30,22 @@ if (location.host === "www.youtube.com") {
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom")
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
-    function view(type=false) {
+    function view(on=false) {
       const vs = video.style;
       const bs = bar.style
       const ps = player.style
-      if (type) {
+      if (on) {
         vs.position = "fixed";
         vs.top = "56px";
         vs.left = "1px";
         vs.zIndex = "1003";
         vs.height = `${Math.floor(originalHeight * 0.5)}px`;
         vs.width = `${Math.floor(originalWidth * 0.5)}px`;
+        vs.borderRadius = "0 0 15px 0";
+        bs.opacity = "1";
         bs.position = "fixed";
-        bs.scale = "0.5"
-        bs.left = `-${Math.floor(originalWidth * 0.25) - 15}px`;
-        bs.top = `${Math.floor(originalHeight * 0.5) + 18}px`;
+        bs.left = "0px";
+        bs.bottom = "0px";
         bs.background = "rgb(0,0,0,0.5)"
         ps.position = "unset";
       } else {
@@ -54,10 +55,11 @@ if (location.host === "www.youtube.com") {
         vs.zIndex = "0";
         vs.height = "fit-content";
         vs.width = "revert-layer";
+        vs.borderRadius = "unset";
+        bs.opacity = "revert-layer";
         bs.position = "absolute";
-        bs.scale = "1"
         bs.left = "12px"
-        bs.top = "unset"
+        bs.bottom = "0";
         bs.background = "unset"
         ps.position = "relative";
       }
