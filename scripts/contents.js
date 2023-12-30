@@ -23,9 +23,8 @@ if (location.host === "www.youtube.com") {
       setTimeout(addPiPButton, 1000);
     }
   }
-
   function sponsor_ads() {
-    const sponsor_list = document.querySelectorAll("ytd-player-legacy-desktop-watch-ads-renderer, #player-ads")
+    const sponsor_list = document.querySelectorAll("ytd-player-legacy-desktop-watch-ads-renderer, #player-ads,ytd-video-masthead-ad-v3-renderer, ytd-video-masthead-ad-v3-renderer")
     for (const sponsor of sponsor_list) {
       sponsor && sponsor.remove()
     }
