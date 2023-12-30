@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AdBlock",
+  "name": "XinYoutubePremium",
   "description": "Automatically removes Youtube ad elements",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "content_scripts": [
     {
       "js": [
