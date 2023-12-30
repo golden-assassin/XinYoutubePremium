@@ -24,16 +24,16 @@ if (location.host === "www.youtube.com") {
 
 
   function sideview() {
-    Hidden()
+    Hidden();
     const tops = document.querySelector("ytd-watch-metadata");
     const player = document.querySelector(".html5-video-player");
-    const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom")
+    const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom");
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
     function view(on=false) {
       const vs = video.style;
-      const bs = bar.style
-      const ps = player.style
+      const bs = bar.style;
+      const ps = player.style;
       if (on) {
         vs.position = "fixed";
         vs.top = "56px";
@@ -41,12 +41,12 @@ if (location.host === "www.youtube.com") {
         vs.zIndex = "1003";
         vs.height = `${Math.floor(originalHeight * 0.5)}px`;
         vs.width = `${Math.floor(originalWidth * 0.5)}px`;
-        vs.borderRadius = "0 0 15px 0";
+        vs.borderRadius = "0 10px 10px 0";
         bs.opacity = "1";
         bs.position = "fixed";
         bs.left = "0px";
         bs.bottom = "0px";
-        bs.background = "rgb(0,0,0,0.5)"
+        bs.background = "rgb(0,0,0,0.5)";
         ps.position = "unset";
       } else {
         vs.position = "absolute";
@@ -58,9 +58,9 @@ if (location.host === "www.youtube.com") {
         vs.borderRadius = "unset";
         bs.opacity = "revert-layer";
         bs.position = "absolute";
-        bs.left = "12px"
+        bs.left = "12px";
         bs.bottom = "0";
-        bs.background = "unset"
+        bs.background = "unset";
         ps.position = "relative";
       }
     }
@@ -73,7 +73,7 @@ if (location.host === "www.youtube.com") {
       const scrollPosition = window.scrollY || window.pageYOffset;
       const topsOffset = tops.clientHeight;
       scrollPosition > innerHeight - topsOffset ? view(true) : view(false);
-      !tab_off && view(false)
+      !tab_off && view(false);
     });
   }
   function waitVideoLoad() {
