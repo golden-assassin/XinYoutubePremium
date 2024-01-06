@@ -2,60 +2,58 @@ if (location.host === "www.youtube.com") {
   let video;
   let tab_off = true;
 
-  async function Hidden() {
-    const bottom_row = document.querySelector("#bottom-row");
-    const tab = bottom_row.querySelector("#description");
+  async function setup() {
+    const bottom = document.querySelector("#bottom-row");
+    const description = bottom.querySelector("#description");
     const collapse = document.querySelector("#collapse");
-
     function tabClickHandler() {
       tab_off = false;
-      tab.removeEventListener("click", tabClickHandler);
+      description.removeEventListener("click", tabClickHandler);
     }
     function collapseClickHandler() {
       tab_off = true;
       setTimeout(() => {
-        tab.removeEventListener("click", tabClickHandler);
-        tab.addEventListener("click", tabClickHandler);
+        description.removeEventListener("click", tabClickHandler);
+        description.addEventListener("click", tabClickHandler);
       }, 0);
     }
-    tab.addEventListener("click", tabClickHandler);
+    description.addEventListener("click", tabClickHandler);
     collapse.addEventListener("click", collapseClickHandler);
   }
 
 
   function sideview() {
-    Hidden();
+    setup();
+    const styleElement = document.createElement("style");
+    styleElement.innerHTML = '.video_left {left: 0 !important;top:56px !important;z-index: 1003;border-radius: 0 10px 10px 0;}';
     const tops = document.querySelector("ytd-watch-metadata");
     const player = document.querySelector(".html5-video-player");
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom");
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
-    function view(on=false) {
+    function view(on = false) {
       const vs = video.style;
       const bs = bar.style;
       const ps = player.style;
+
       if (on) {
+        video.classList.add("video_left");
         vs.position = "fixed";
-        vs.top = "56px";
-        vs.left = "1px";
-        vs.zIndex = "1003";
         vs.height = `${Math.floor(originalHeight * 0.5)}px`;
         vs.width = `${Math.floor(originalWidth * 0.5)}px`;
-        vs.borderRadius = "0 10px 10px 0";
         bs.opacity = "1";
         bs.position = "fixed";
         bs.left = "0px";
         bs.bottom = "0px";
-        bs.background = "rgb(0,0,0,0.5)";
+        bs.background = "rgb(0, 0, 0, 0.5)";
         ps.position = "unset";
       } else {
+        originalWidth = video.clientWidth;
+        originalHeight = video.clientHeight;
+        video.classList.remove("video_left");
         vs.position = "absolute";
-        vs.top = "0";
-        vs.left = "0";
-        vs.zIndex = "0";
         vs.height = "fit-content";
-        vs.width = "revert-layer";
-        vs.borderRadius = "unset";
+        originalHeight > originalWidth ? vs.width = "auto" : vs.width = "100%";
         bs.opacity = "revert-layer";
         bs.position = "absolute";
         bs.left = "12px";
@@ -64,6 +62,7 @@ if (location.host === "www.youtube.com") {
         ps.position = "relative";
       }
     }
+
 
     window.addEventListener("resize", function() {
       originalWidth = player.clientWidth;
@@ -75,6 +74,7 @@ if (location.host === "www.youtube.com") {
       scrollPosition > innerHeight - topsOffset ? view(true) : view(false);
       !tab_off && view(false);
     });
+    document.body.appendChild(styleElement);
   }
   function waitVideoLoad() {
     (location.pathname === "/watch" && document.readyState === "complete") ?
