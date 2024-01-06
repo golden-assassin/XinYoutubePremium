@@ -21,7 +21,6 @@ if (location.host === "www.youtube.com") {
     collapse.addEventListener("click", collapseClickHandler);
   }
 
-
   function sideview() {
     setup();
     const styleElement = document.createElement("style");
@@ -53,7 +52,7 @@ if (location.host === "www.youtube.com") {
         video.classList.remove("video_left");
         vs.position = "absolute";
         vs.height = "fit-content";
-        originalHeight > originalWidth ? vs.width = "auto" : vs.width = "100%";
+        vs.width = originalHeight > originalWidth ? "auto" : originalHeight === originalWidth ? "auto" : "100%";
         bs.opacity = "revert-layer";
         bs.position = "absolute";
         bs.left = "12px";
@@ -62,7 +61,6 @@ if (location.host === "www.youtube.com") {
         ps.position = "relative";
       }
     }
-
 
     window.addEventListener("resize", function() {
       originalWidth = player.clientWidth;
