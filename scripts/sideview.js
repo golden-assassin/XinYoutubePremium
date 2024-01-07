@@ -23,23 +23,27 @@ if (location.host === "www.youtube.com") {
 
   function sideview() {
     setup();
-    const styleElement = document.createElement("style");
-    styleElement.innerHTML = '.video_left {left: 0 !important;top:56px !important;z-index: 1003;border-radius: 0 10px 10px 0;}';
     const tops = document.querySelector("ytd-watch-metadata");
     const player = document.querySelector(".html5-video-player");
     const bar = document.querySelector("#movie_player > div.ytp-chrome-bottom");
+    const styleElement = document.createElement("style");
     let originalWidth = video.clientWidth;
     let originalHeight = video.clientHeight;
-    function view(on = false) {
-      const vs = video.style;
+    function view(on=false) {
       const bs = bar.style;
       const ps = player.style;
-
       if (on) {
-        video.classList.add("video_left");
-        vs.position = "fixed";
-        vs.height = `${Math.floor(originalHeight * 0.5)}px`;
-        vs.width = `${Math.floor(originalWidth * 0.5)}px`;
+        video.classList.add("video_style");
+        styleElement.innerHTML = `
+        .video_style {
+          left: 0 !important;
+          top:56px !important;
+          z-index: 1003;
+          border-radius: 0 10px 10px 0;
+          position: fixed !important;
+          height: ${Math.floor(originalHeight * 0.5)}px !important;
+          width: ${Math.floor(originalWidth * 0.5)}px !important;
+        }`;
         bs.opacity = "1";
         bs.position = "fixed";
         bs.left = "0px";
@@ -49,10 +53,7 @@ if (location.host === "www.youtube.com") {
       } else {
         originalWidth = video.clientWidth;
         originalHeight = video.clientHeight;
-        video.classList.remove("video_left");
-        vs.position = "absolute";
-        vs.height = "fit-content";
-        vs.width = originalHeight > originalWidth ? "auto" : originalHeight === originalWidth ? "auto" : "100%";
+        video.classList.remove("video_style");
         bs.opacity = "revert-layer";
         bs.position = "absolute";
         bs.left = "12px";
@@ -61,7 +62,6 @@ if (location.host === "www.youtube.com") {
         ps.position = "relative";
       }
     }
-
     window.addEventListener("resize", function() {
       originalWidth = player.clientWidth;
       originalHeight = player.clientHeight;
