@@ -33,17 +33,17 @@ if (location.host === "www.youtube.com") {
       const bs = bar.style;
       const ps = player.style;
       if (on) {
-        video.classList.add("video_style");
         styleElement.innerHTML = `
         .video_style {
-          left: 0 !important;
-          top:56px !important;
-          z-index: 1003;
-          border-radius: 0 10px 10px 0;
-          position: fixed !important;
-          height: ${Math.floor(originalHeight * 0.5)}px !important;
-          width: ${Math.floor(originalWidth * 0.5)}px !important;
+         left: 0 !important;
+         top:56px !important;
+         z-index: 1003;
+         border-radius: 0 10px 10px 0;
+         position: fixed !important;
+         height: ${Math.floor(originalHeight*0.5)}px !important;
+         width: ${Math.floor(originalWidth*0.5)}px !important;
         }`;
+        video.classList.add("video_style");
         bs.opacity = "1";
         bs.position = "fixed";
         bs.left = "0px";
@@ -51,9 +51,9 @@ if (location.host === "www.youtube.com") {
         bs.background = "rgb(0, 0, 0, 0.5)";
         ps.position = "unset";
       } else {
+        video.classList.remove("video_style");
         originalWidth = video.clientWidth;
         originalHeight = video.clientHeight;
-        video.classList.remove("video_style");
         bs.opacity = "revert-layer";
         bs.position = "absolute";
         bs.left = "12px";
